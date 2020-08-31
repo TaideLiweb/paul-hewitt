@@ -115,15 +115,15 @@
         <div class="col-12 my-4 section_title">
           <h3 class="d-flex justify-content-center">七夕商品</h3>
         </div>
-        <div class="col-6 px-0">
+        <div class="col-12 col-sm-6 py-4 py-sm-0 px-0">
           <img src="../assets/images/FhAI6b9FqC5t7meWCzZFbWYkC1JD.jpg" width="100%" alt />
         </div>
-        <div class="col-6 px-4 d-flex align-items-center">
+        <div class="col-12 col-sm-6 px-4 d-flex align-items-center">
           <div>
-            <h2>Paul hewwit代表你滿滿的心意</h2>
+            <h2 class="text-center">Paul hewwit代表你滿滿的心意</h2>
             <p class="text-center">
               還在煩惱要送什麼東西給另一半嗎?情人節活動火熱開跑中
-              <br />活動期間買一送一
+              ,活動期間買一送一
             </p>
             <div class="d-flex justify-content-center">
               <button class="btn btn-dark">馬上購買</button>
@@ -138,9 +138,9 @@
     >資料、圖片來源皆來自網路，僅用來做為學習用途。</footer>
   </div>
 </template>
-<style>
+<style scoped>
 .main_banner {
-  height: 200px;
+  height: 167px;
   overflow: hidden;
 }
 .section1,
@@ -188,7 +188,7 @@
   width: 80%;
 }
 .black_block_content {
-  padding: 40px;
+  padding: 20px 10px;
 }
 .black_block_btn {
   outline: none;
@@ -199,9 +199,10 @@
   font-weight: 700;
   border: 1px solid #fff;
   border-radius: 5px;
-  padding: 10px 25px;
+  padding: 10px;
   transition: all 0.3s;
 }
+
 .black_block_btn:hover {
   transform: scale(1.1);
 }
@@ -211,7 +212,7 @@
   background: rgba(0, 0, 0, 0.6);
 }
 #category_wristband {
-  background-size: 100%;
+  background-size: 105%;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(../assets/images/P0000200003571_4_17482.png);
@@ -258,6 +259,12 @@
     height: 300px;
     overflow: hidden;
   }
+  .black_block_btn {
+    padding: 10px 25px;
+  }
+  .swiper_image {
+    width: 100%;
+  }
 }
 @media (min-width: 768px) {
   .main_banner {
@@ -270,10 +277,13 @@
   .product_category:hover {
     width: 70%;
   }
-  .swiper_image {
+  /* .swiper_image {
     display: flex;
     justify-content: center;
     width: 220px;
+  } */
+  .black_block_content {
+    padding: 60px;
   }
 }
 @media (min-width: 992px) {
@@ -284,21 +294,21 @@
   .main_banner > img {
     margin-top: -100px;
   }
-  .swiper_image {
+  /* .swiper_image {
     display: flex;
     justify-content: center;
     width: 230px;
-  }
+  } */
   .fixed_gb > div {
     width: 60%;
   }
 }
 @media (min-width: 1200px) {
-  .swiper_image {
+  /* .swiper_image {
     display: flex;
     justify-content: center;
     width: 270px;
-  }
+  } */
 }
 </style>
 <script>
