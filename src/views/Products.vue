@@ -9,45 +9,37 @@
           <div class="col-12 col-md-3 col-lg-2 product_category">
             <h4>商品分類</h4>
             <ul class="px-0">
-              <li>
-                <a href>全部商品</a>
-              </li>
-              <li>
-                <a href>手錶</a>
-              </li>
-              <li>
-                <a href>手環</a>
-              </li>
-              <li>
-                <a href>組合商品</a>
+              <li class="py-2" v-for="item in category" :key="item">
+                <a href>{{ item }}</a>
               </li>
             </ul>
           </div>
           <div class="col-12 col-md-9 col-gl-10">
-            <h2>全部商品</h2>
-            <div class="row">
-              <div class="col-sm-6 col-lg-4 col-xl-3 mb-3" v-for="item in products" :key="item.id">
-                <div>
-                  <img :src="item.imageUrl[0]" width="100%" alt />
-                </div>
-                <div>
+            <h3>全部商品</h3>
+            <div class="row mt-3">
+              <div class="col-sm-6 col-lg-4 mb-3" v-for="item in products" :key="item.id">
+                <div class="card">
                   <div>
-                    <h5 class="text-center">{{ item.category }}</h5>
-                    <h6 class="text-center">{{ item.title }}</h6>
-                    <div class="text-center">
-                      <del>{{ item.origin_price }}</del>
-                    </div>
-                    <div class="text-center">{{ item.price }}</div>
+                    <img :src="item.imageUrl[0]" width="100%" alt />
                   </div>
-                  <div class="d-flex">
-                    <router-link
-                      class="btn btn-outline-dark px-2 mr-2"
-                      style="flex:5;"
-                      :to="`/product/${item.id}`"
-                    >購買商品</router-link>
-                    <button class="btn btn-outline-dark px-2" style="flex:1;">
-                      <i class="far fa-heart"></i>
-                    </button>
+                  <div>
+                    <div class="py-2 px-3">
+                      <h4 class>{{ item.title }}</h4>
+                      <div class="my-2 d-flex align-items-center justify-content-between">
+                        <div class="origin_price">{{ item.origin_price | money }}</div>
+                        <div class="text-center price">{{ item.price | money }}</div>
+                      </div>
+                    </div>
+                    <div class="d-flex border_t">
+                      <router-link
+                        class="border_r buy px-2 py-2"
+                        :to="`/product/${item.id}`"
+                        >購買商品</router-link
+                      >
+                      <button class="btn px-2 favor" style="flex:1;">
+                        <i class="far fa-heart"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -60,11 +52,49 @@
   </div>
 </template>
 <style>
+a:hover {
+  text-decoration: none;
+}
 .product_category li {
   list-style: none;
 }
 .product_category li a {
   color: rgba(17, 17, 17, 0.7);
+}
+.product_category li a:hover {
+  color: rgba(0, 0, 0, 1);
+}
+.border_t {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+.border_r {
+  border-right: 1px solid rgba(0, 0, 0, 0.125);
+}
+.buy {
+  display: flex;
+  flex: 5;
+  align-items: center;
+  justify-content: center;
+  color: #343a40;
+  transition: all 0.3s;
+}
+.buy:hover {
+  color: #343a40;
+  background: #e6dfd7;
+}
+.favor {
+  flex: 1;
+}
+.favo:hover {
+  color: #dc3545;
+}
+.origin_price {
+  color: #6c757d;
+  font-size: 16px;
+}
+.price {
+  color: #dc3545;
+  font-size: 1.25rem;
 }
 </style>
 <script>
@@ -72,6 +102,7 @@ export default {
   data() {
     return {
       products: [],
+      category: ['所有商品', '手錶', '手環', '組合商品'],
     };
   },
   created() {

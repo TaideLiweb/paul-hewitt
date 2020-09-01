@@ -253,6 +253,9 @@
   justify-content: center;
   width: 270px;
 }
+.swiper_image > img {
+  height: 270px;
+}
 
 @media (min-width: 576px) {
   .main_banner {
@@ -264,6 +267,9 @@
   }
   .swiper_image {
     width: 100%;
+  }
+  .swiper_image > img {
+    height: auto;
   }
 }
 @media (min-width: 768px) {

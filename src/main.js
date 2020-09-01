@@ -10,9 +10,13 @@ Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
 
 Vue.config.productionTip = false;
-
+Vue.filter('money', (num) => {
+  const parts = num.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return `$${parts.join('.')}`;
+});
 new Vue({
   router,
   // eslint-disable-next-line arrow-parens
-  render: h => h(App),
+  render: (h) => h(App),
 }).$mount('#app');
