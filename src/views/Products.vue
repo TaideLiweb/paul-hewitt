@@ -24,17 +24,17 @@
                   </div>
                   <div>
                     <div class="py-2 px-3">
-                      <h4 class>{{ item.title }}</h4>
+                      <h5>{{ item.title }}</h5>
                       <div class="my-2 d-flex align-items-center justify-content-between">
-                        <div class="origin_price">{{ item.origin_price | money }}</div>
+                        <div class="origin_price">
+                          <del>{{ item.origin_price | money }}</del>
+                        </div>
                         <div class="text-center price">{{ item.price | money }}</div>
                       </div>
                     </div>
                     <div class="d-flex border_t">
-                      <router-link
-                        class="border_r buy px-2 py-2"
-                        :to="`/product/${item.id}`"
-                        >購買商品</router-link
+                      <router-link class="border_r buy px-2 py-2" :to="`/product/${item.id}`">
+                        購買商品</router-link
                       >
                       <button class="btn px-2 favor" style="flex:1;">
                         <i class="far fa-heart"></i>
@@ -51,7 +51,11 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
+body {
+  font-family: 'Noto Sans TC', sans-serif !important;
+}
+
 a:hover {
   text-decoration: none;
 }
@@ -85,7 +89,7 @@ a:hover {
 .favor {
   flex: 1;
 }
-.favo:hover {
+.favor:hover {
   color: #dc3545;
 }
 .origin_price {
