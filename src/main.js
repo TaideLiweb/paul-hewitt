@@ -10,11 +10,14 @@ import {
 import * as rules from 'vee-validate/dist/rules';
 import TW from 'vee-validate/dist/locale/zh_TW.json';
 import 'bootstrap';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import App from './App.vue';
 import router from './router';
 
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
+Vue.component('Loading', Loading);
 window.$ = $;
 Vue.config.productionTip = false;
 Vue.filter('money', (num) => {

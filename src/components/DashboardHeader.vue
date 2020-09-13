@@ -8,7 +8,7 @@
               class="navbar-toggler"
               type="button"
               data-toggle="collapse"
-              data-target=".navbar-collapse.show"
+              data-target="#navbarNav"
               aria-controls="navbarNav"
               aria-expanded="false"
               aria-label="Toggle navigation"
@@ -75,6 +75,23 @@ export default {
   methods: {
     logout() {
       document.cookie = 'loginVerify=; expires= GMT; path=/';
+      this.token = document.cookie.replace(
+        // eslint-disable-next-line no-useless-escape
+        /(?:(?:^|.*;\s*)loginVerify\s*\=\s*([^;]*).*$)|^.*$/,
+        '$1',
+      );
+      this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`;
+      const api = `${process.env.VUE_APP_APIPATH}auth/check`;
+      this.axios
+        .post(api, { api_token: this.token })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          this.$router.push('/login');
+          console.log(err);
+        });
+      this.checkSuccess = true;
     },
   },
 };

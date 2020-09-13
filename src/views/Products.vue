@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading :active.sync="isLoading" />
     <div>
       <div class="main">
         <img src="../assets/images/paul-hewitt-banner_1.jpg" width="100%" alt />
@@ -36,8 +37,13 @@
                       <router-link class="border_r buy px-2 py-2" :to="`/product/${item.id}`"
                         >購買商品</router-link
                       >
-                      <button class="btn px-2 favor" style="flex:1;">
-                        <i class="far fa-heart" @click="Atob(item, $event)" style="color:red"></i>
+                      <button class="btn px-2 favor" @click="Atob(item.id)" style="flex:1;">
+                        <i
+                          class="far fa-heart"
+                          style="color:red"
+                          v-if="favorite.indexOf(item.id) === -1"
+                        ></i>
+                        <i class="fas fa-heart" style="color:red" v-else></i>
                       </button>
                     </div>
                   </div>
@@ -110,26 +116,25 @@ a:hover {
 export default {
   data() {
     return {
-      favorite: [],
-      getfavorite: [],
+      favorite: JSON.parse(localStorage.getItem('favorite')) || [],
       products: [],
       category: ['所有商品', '手錶', '手環', '組合商品'],
+      isLoading: false,
     };
   },
   methods: {
-    Atob(val, e) {
-      const FavoriteGet = JSON.parse(localStorage.getItem('favorite')) || [];
-      FavoriteGet.forEach((value) => {
-        this.favorite.push(value.id);
-      });
-      const index = this.favorite.findIndex((v) => v === val.id);
-      if (index === -1) {
-        const NewFavoriteGet = [...FavoriteGet, val];
-        localStorage.setItem('favorite', JSON.stringify(NewFavoriteGet));
+    Atob(id) {
+      const favorite = this.favorite.indexOf(id);
+      if (favorite === -1) {
+        this.favorite.push(id);
+      } else {
+        this.favorite.splice(favorite, 1);
       }
-      e.target.classList.toggle('heart');
+      localStorage.setItem('favorite', JSON.stringify(this.favorite));
+      this.$bus.$emit('pushfavorite', id);
     },
     category_switch(item) {
+      this.isLoading = true;
       switch (item) {
         case '所有商品':
           this.category_all();
@@ -144,12 +149,18 @@ export default {
       this.axios
         .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
         .then((res) => {
-          // console.log('data', res);
           this.products = res.data.data;
-          // console.log('products', this.products);
+          this.$bus.$on('delfavorite', (id) => {
+            const favorite = this.favorite.indexOf(id);
+            if (favorite !== -1) {
+              this.favorite.splice(favorite, 1);
+            }
+          });
+          this.isLoading = false;
         });
     },
     category_fliter(categoryName) {
+      this.isLoading = true;
       this.axios
         .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
         .then((res) => {
@@ -162,6 +173,7 @@ export default {
             }
           });
           console.log(this.products);
+          this.isLoading = false;
         });
     },
   },

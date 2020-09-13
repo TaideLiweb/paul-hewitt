@@ -29,7 +29,7 @@
           />
           <!--type="password"可以讓input欄位遮蓋字串-->
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" @click="login">登入</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
       </form>
     </div>
   </div>

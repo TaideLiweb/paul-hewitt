@@ -14,7 +14,11 @@
               <div class="black_block_content">
                 <h3 class="text-center mb-4">手錶</h3>
                 <div class="d-flex justify-content-center">
-                  <button class="black_block_btn">快去逛逛</button>
+                  <button class="black_block_btn">
+                    <router-link to="/products">
+                    快去逛逛
+                    </router-link>
+                    </button>
                 </div>
               </div>
             </div>
@@ -24,7 +28,11 @@
               <div class="black_block_content">
                 <h3 class="text-center mb-4">手環</h3>
                 <div class="d-flex justify-content-center">
-                  <button class="black_block_btn">快去逛逛</button>
+                  <button class="black_block_btn">
+                    <router-link to="/products">
+                    快去逛逛
+                    </router-link>
+                    </button>
                 </div>
               </div>
             </div>
@@ -140,6 +148,17 @@
   </div>
 </template>
 <style scoped>
+a{
+  text-decoration: none;
+}
+.black_block_btn a{
+  color: #fff;
+  text-decoration: none;
+}
+.black_block_btn a:hover{
+  color: #fff;
+  text-decoration: none;
+}
 .main {
   margin-top: 77px;
 }

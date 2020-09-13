@@ -3,7 +3,7 @@
     <div id="nav">
       <DashboardHeader></DashboardHeader>
     </div>
-    <router-view />
+    <router-view v-if="checkSuccess" :token="token" />
   </div>
 </template>
 <script>
@@ -27,16 +27,17 @@ export default {
         '$1',
       );
       this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`;
-      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/auth/check`;
+      const api = `${process.env.VUE_APP_APIPATH}auth/check`;
       this.axios
         .post(api, { api_token: this.token })
         .then((res) => {
           console.log(res);
+        })
+        .catch((err) => {
+          this.$router.push('/login');
+          console.log(err);
         });
-      // .catch((err) => {
-      //   console.log(err);
-      //   this.$router.push('/login');
-      // });
+      this.checkSuccess = true;
     },
   },
   created() {

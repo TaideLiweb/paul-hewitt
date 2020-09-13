@@ -47,17 +47,16 @@
                 data-toggle="collapse"
                 data-target=".navbar-collapse.show"
               >
-                <router-link
+                <a
                   class="nav-link"
-                  to="/products"
                   data-toggle="modal"
                   data-target="#exampleModal"
                 >
                   <i class="far fa-heart"></i>
                   <span class="sr-only">(current)</span>
-                </router-link>
+                </a>
               </li>
-              <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <li class="nav-item" data-toggle="collapse" @click="getLocalStorage" data-target=".navbar-collapse.show">
                 <router-link class="nav-link" to="/login">
                   <i class="far fa-user"></i>
                   <span class="sr-only">(current)</span>
@@ -93,12 +92,12 @@
                 <th></th>
               </thead>
               <tbody>
-                <tr v-for="item in FavoriteGet2" :key="item.id">
+                <tr v-for="item in favoriteProduct" :key="item.id">
                   <td>{{ item.title }}</td>
                   <td>{{ item.content }}</td>
                   <td>{{ item.price }}</td>
                   <td class="deleteBtn">
-                    <button class="btn btn-outline-danger" @click="deleteFavoriteGet2(item)">
+                    <button class="btn btn-outline-danger" @click="deleteFavoriteGet(item.id)">
                       刪除
                     </button>
                   </td>
@@ -129,20 +128,44 @@
 export default {
   data() {
     return {
-      FavoriteGet2: [],
+      favorite: JSON.parse(localStorage.getItem('favorite')) || [],
+      favoriteProduct: [],
     };
   },
   methods: {
-    deleteFavoriteGet2(val) {
-      this.FavoriteGet2.splice(this.FavoriteGet2.indexOf(val), 1);
-      localStorage.setItem('favorite', JSON.stringify(this.FavoriteGet2));
+    deleteFavoriteGet(id) {
+      const favorite = this.favorite.indexOf(id);
+      if (favorite !== -1) {
+        this.favorite.splice(favorite, 1);
+        this.getFavorite();
+      }
+      localStorage.setItem('favorite', JSON.stringify(this.favorite));
+      this.$bus.$emit('delfavorite', id);
     },
     getLocalStorage() {
-      this.FavoriteGet2 = JSON.parse(localStorage.getItem('favorite'));
+      this.axios
+        .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
+        .then((res) => {
+          this.products = res.data.data;
+          this.getFavorite();
+        });
+    },
+    getFavorite() {
+      this.favoriteProduct = this.products.filter(
+        (product) => this.favorite.indexOf(product.id) > -1,
+      );
     },
   },
   created() {
     this.getLocalStorage();
+    this.$bus.$on('pushfavorite', (id) => {
+      const favorite = this.favorite.indexOf(id);
+      if (favorite === -1) {
+        this.favorite.push(id);
+      } else {
+        this.favorite.splice(favorite, 1);
+      }
+    });
   },
 };
 </script>
