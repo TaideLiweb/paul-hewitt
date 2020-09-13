@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <div class="container">
       <div class="row">
         <div class="col-7">
@@ -53,6 +53,9 @@
   </div>
 </template>
 <style scoped>
+.main {
+  margin-top: 77px;
+}
 .container {
   font-family: 'Noto Sans TC', sans-serif !important;
 }
@@ -136,7 +139,7 @@ export default {
     checkOutUpdate() {
       if (this.count > 0) {
         this.axios
-          .post(`${process.env.VUE_APP_UUID}${process.env.VUE_APP_APIPATH}/ec/shopping`, {
+          .post(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/shopping`, {
             product: this.products.id,
             quantity: this.count,
           })
@@ -154,7 +157,7 @@ export default {
   created() {
     const { id } = this.$route.params;
     this.axios
-      .get(`${process.env.VUE_APP_UUID}${process.env.VUE_APP_APIPATH}/ec/product/${id}`)
+      .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/product/${id}`)
       .then((res) => {
         console.log('data', res);
         this.products = res.data.data;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="main_banner">
+    <div class="main_banner main">
       <img src="../assets/images/Paul-Hewitt-Blog-Banner.jpg" width="100%" alt />
     </div>
     <div class="container section1">
@@ -122,8 +122,7 @@
           <div>
             <h2 class="text-center">Paul hewwit代表你滿滿的心意</h2>
             <p class="text-center">
-              還在煩惱要送什麼東西給另一半嗎?情人節活動火熱開跑中
-              ,活動期間買一送一
+              還在煩惱要送什麼東西給另一半嗎?情人節活動火熱開跑中 ,活動期間買一送一
             </p>
             <div class="d-flex justify-content-center">
               <button class="btn btn-dark">馬上購買</button>
@@ -135,10 +134,15 @@
     <footer
       class="mt-4 d-flex justify-content-center align-items-center"
       style="height:100px; background:#4b4b4b; color:#fff"
-    >資料、圖片來源皆來自網路，僅用來做為學習用途。</footer>
+    >
+      資料、圖片來源皆來自網路，僅用來做為學習用途。
+    </footer>
   </div>
 </template>
 <style scoped>
+.main {
+  margin-top: 77px;
+}
 .main_banner {
   height: 167px;
   overflow: hidden;
@@ -328,10 +332,10 @@ export default {
         slidesPerGroup: 1,
         loop: true,
         loopFillGroupWithBlank: true,
-        // autoplay: {
-        //   delay: 2500,
-        //   disableOnInteraction: false,
-        // },
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
         pagination: {
           el: '.swiper-pagination',
           clickable: true,

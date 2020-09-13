@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div>
+      <div class="main">
         <img src="../assets/images/paul-hewitt-banner_1.jpg" width="100%" alt />
       </div>
       <div class="container section1">
@@ -9,8 +9,8 @@
           <div class="col-12 col-md-3 col-lg-2 product_category">
             <h4>商品分類</h4>
             <ul class="px-0">
-              <li class="py-2" v-for="item in category" :key="item">
-                <a href>{{ item }}</a>
+              <li class="py-2" v-for="item in category" :key="item" @click="category_switch(item)">
+                <a>{{ item }}</a>
               </li>
             </ul>
           </div>
@@ -33,11 +33,11 @@
                       </div>
                     </div>
                     <div class="d-flex border_t">
-                      <router-link class="border_r buy px-2 py-2" :to="`/product/${item.id}`">
-                        購買商品</router-link
+                      <router-link class="border_r buy px-2 py-2" :to="`/product/${item.id}`"
+                        >購買商品</router-link
                       >
                       <button class="btn px-2 favor" style="flex:1;">
-                        <i class="far fa-heart"></i>
+                        <i class="far fa-heart" @click="Atob(item, $event)" style="color:red"></i>
                       </button>
                     </div>
                   </div>
@@ -55,7 +55,9 @@
 body {
   font-family: 'Noto Sans TC', sans-serif !important;
 }
-
+.main {
+  margin-top: 77px;
+}
 a:hover {
   text-decoration: none;
 }
@@ -100,23 +102,71 @@ a:hover {
   color: #dc3545;
   font-size: 1.25rem;
 }
+.heart {
+  font-weight: 900;
+}
 </style>
 <script>
 export default {
   data() {
     return {
+      favorite: [],
+      getfavorite: [],
       products: [],
       category: ['所有商品', '手錶', '手環', '組合商品'],
     };
   },
-  created() {
-    this.axios
-      .get(`${process.env.VUE_APP_UUID}${process.env.VUE_APP_APIPATH}/ec/products`)
-      .then((res) => {
-        console.log('data', res);
-        this.products = res.data.data;
-        console.log('products', this.products);
+  methods: {
+    Atob(val, e) {
+      const FavoriteGet = JSON.parse(localStorage.getItem('favorite')) || [];
+      FavoriteGet.forEach((value) => {
+        this.favorite.push(value.id);
       });
+      const index = this.favorite.findIndex((v) => v === val.id);
+      if (index === -1) {
+        const NewFavoriteGet = [...FavoriteGet, val];
+        localStorage.setItem('favorite', JSON.stringify(NewFavoriteGet));
+      }
+      e.target.classList.toggle('heart');
+    },
+    category_switch(item) {
+      switch (item) {
+        case '所有商品':
+          this.category_all();
+          break;
+
+        default:
+          this.category_fliter(item);
+          break;
+      }
+    },
+    category_all() {
+      this.axios
+        .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
+        .then((res) => {
+          // console.log('data', res);
+          this.products = res.data.data;
+          // console.log('products', this.products);
+        });
+    },
+    category_fliter(categoryName) {
+      this.axios
+        .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
+        .then((res) => {
+          const filterAry = res.data.data;
+          filterAry.forEach((item) => {
+            if (item.category === categoryName) {
+              const productAry = [];
+              productAry.push(item);
+              this.products = productAry;
+            }
+          });
+          console.log(this.products);
+        });
+    },
+  },
+  created() {
+    this.category_all();
   },
 };
 </script>

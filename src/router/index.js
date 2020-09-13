@@ -31,7 +31,6 @@ const routes = [
       },
     ],
   },
-
   {
     path: '/admin',
     name: 'Dashboard',
@@ -39,7 +38,7 @@ const routes = [
     children: [
       {
         path: 'products',
-        name: 'Products',
+        name: 'products',
         component: () => import('../views/dashboard/Products.vue'),
       },
       {
@@ -53,6 +52,11 @@ const routes = [
         component: () => import('../views/dashboard/Order.vue'),
       },
     ],
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/dashboard/Login.vue'),
   },
 ];
 

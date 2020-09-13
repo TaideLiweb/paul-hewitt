@@ -9,6 +9,7 @@ import {
 } from 'vee-validate';
 import * as rules from 'vee-validate/dist/rules';
 import TW from 'vee-validate/dist/locale/zh_TW.json';
+import 'bootstrap';
 import App from './App.vue';
 import router from './router';
 

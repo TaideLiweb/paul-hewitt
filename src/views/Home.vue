@@ -3,7 +3,6 @@
     <div id="nav">
       <Header></Header>
     </div>
-
     <router-view />
   </div>
 </template>
@@ -13,7 +12,6 @@
 import Header from '../components/Header.vue';
 
 export default {
-  name: 'header',
   components: {
     Header,
   },
