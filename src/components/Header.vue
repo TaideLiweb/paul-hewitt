@@ -17,9 +17,9 @@
             </button>
           </div>
           <div class="col-6 d-flex justify-content-end justify-content-lg-start px-0">
-            <a class="navbar-brand" href="#">
+            <router-link class="nav-link" to="/">
               <img src="../assets/images/logo.png" width="208" alt />
-            </a>
+            </router-link>
           </div>
           <div class="collapse navbar-collapse justify-content-end col-lg-6 px-0" id="navbarNav">
             <ul class="navbar-nav">
@@ -83,10 +83,11 @@
             </button>
           </div>
           <div class="modal-body">
+            <div class="table-responsive">
             <table class="table">
               <thead class="thead-light">
                 <th>產品名稱</th>
-                <th>數量</th>
+                <th>原價</th>
                 <th>單價</th>
                 <th>小計</th>
                 <th></th>
@@ -94,7 +95,7 @@
               <tbody>
                 <tr v-for="item in favoriteProduct" :key="item.id">
                   <td>{{ item.title }}</td>
-                  <td>{{ item.content }}</td>
+                  <td>{{ item.origin_price }}</td>
                   <td>{{ item.price }}</td>
                   <td class="deleteBtn">
                     <button class="btn btn-outline-danger" @click="deleteFavoriteGet(item.id)">
@@ -104,11 +105,12 @@
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">確認</button>
           </div>
         </div>
       </div>
@@ -154,6 +156,7 @@ export default {
       this.favoriteProduct = this.products.filter(
         (product) => this.favorite.indexOf(product.id) > -1,
       );
+      console.log(this.favoriteProduct);
     },
   },
   created() {

@@ -1,5 +1,6 @@
 <template>
   <div class="container main">
+    <Loading :active.sync="isLoading" />
     <div class="text-right mb-3">
       <button @click="openModal" class="btn btn-outline-primary btn-sm">新增產品</button>
     </div>
@@ -78,6 +79,7 @@ export default {
       template: { imageUrl: [] },
       pagination: {},
       token: '',
+      isLoading: false,
     };
   },
   methods: {
@@ -111,21 +113,23 @@ export default {
       this.template = { ...item };
     },
     removeData(template) {
+      this.isLoading = true;
       let key;
       this.products.forEach((item, index) => {
         if (item.id === template.id) {
           key = index;
         }
       });
-      const api = ` ${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${this.products[key].id}`;
-      this.axios.delete(api).then((res) => {
+      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${this.products[key].id}`;
+      this.axios.delete(api).then(() => {
         this.getData();
-        console.log(res);
+        this.isLoading = false;
       });
       $('#deleteModal').modal('hide');
     },
 
     updateData() {
+      this.isLoading = true;
       if (this.template.id) {
         let key;
         this.products.forEach((item, index) => {
@@ -134,7 +138,7 @@ export default {
           }
         });
         const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${this.products[key].id}`;
-        this.axios.patch(api, this.template);
+        this.axios.patch(api, this.template).then(() => { this.isLoading = false; });
         this.$set(this.products, key, this.template);
         $('#modal').modal('hide');
         this.template = { imageUrl: [] };
@@ -147,6 +151,7 @@ export default {
         this.axios.post(api, this.template).then((res) => {
           console.log(res);
           this.getData();
+          this.isLoading = false;
         });
         $('#modal').modal('hide');
         this.template = { imageUrl: [] };

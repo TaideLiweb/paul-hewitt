@@ -161,7 +161,7 @@ export default {
         `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/orders/${this.order[key].id}`,
       ).then((res) => {
         this.orderOther = res.data.data;
-        this.orderOther.coupon = this.orderOther.coupon ? this.orderOther.coupon : '無優惠卷';
+        this.orderOther.coupon = this.orderOther.coupon ? this.orderOther.coupon.code : '無優惠卷';
         this.orderOther.message = this.orderOther.message ? this.orderOther.message : '無備註';
         this.orderProduvts = this.orderOther.products;
         this.orderUser = this.orderOther.user;

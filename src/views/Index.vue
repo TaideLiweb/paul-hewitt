@@ -59,61 +59,19 @@
           <h3 class="d-flex justify-content-center">新品上市</h3>
         </div>
         <swiper class="swiper" :options="swiperOption">
-          <swiper-slide>
-            <div>
+          <swiper-slide v-for="item in products" :key="item.id">
+            <div class="overflow-hidden">
               <div class="swiper_image">
-                <img src="../assets/images/slider1.jpg" width="100%" alt />
+                <img :src="item.imageUrl" width="100%" alt />
               </div>
-              <div class="text-center my-2">套組系列</div>
-              <div class="text-center my-2">黑色米蘭帶錶+船錨尼龍黑色手環</div>
-              <div class="text-center my-2">$5000</div>
+              <div class="category_style">{{item.category}}</div>
+              <div class="text-center my-2 text_break">{{item.title}}</div>
+              <div class="text-center my-2">{{item.price | money}}</div>
               <div class="d-flex justify-content-center">
                 <button class="btn btn-outline-dark">馬上去逛逛</button>
               </div>
             </div>
           </swiper-slide>
-          <swiper-slide>
-            <div>
-              <div class="swiper_image">
-                <img src="../assets/images/slider1.jpg" width="100%" alt />
-              </div>
-              <div class="text-center my-2">套組系列</div>
-              <div class="text-center my-2">黑色米蘭帶錶+船錨尼龍黑色手環</div>
-              <div class="text-center my-2">$5000</div>
-              <div class="d-flex justify-content-center">
-                <button class="btn btn-outline-dark">馬上去逛逛</button>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div>
-              <div class="swiper_image">
-                <img src="../assets/images/slider1.jpg" width="100%" alt />
-              </div>
-              <div class="text-center my-2">套組系列</div>
-              <div class="text-center my-2">黑色米蘭帶錶+船錨尼龍黑色手環</div>
-              <div class="text-center my-2">$5000</div>
-              <div class="d-flex justify-content-center">
-                <button class="btn btn-outline-dark">馬上去逛逛</button>
-              </div>
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div>
-              <div class="swiper_image">
-                <img src="../assets/images/slider1.jpg" width="100%" alt />
-              </div>
-              <div class="text-center my-2">套組系列</div>
-              <div class="text-center my-2">黑色米蘭帶錶+船錨尼龍黑色手環</div>
-              <div class="text-center my-2">$5000</div>
-              <div class="d-flex justify-content-center">
-                <button class="btn btn-outline-dark">馬上去逛逛</button>
-              </div>
-            </div>
-          </swiper-slide>
-          <!-- <div class="swiper-slide" :key="banner" v-for="banner in banners">
-            <img :src="banner" />
-          </div>-->
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
       </div>
@@ -280,6 +238,23 @@ a{
   height: 270px;
 }
 
+.category_style{
+  font-size: 12px;
+  width: 40%;
+  border: 1px solid #343a40;
+  border-radius: 20px;
+  background: #343a40;
+  color: #fff;
+  text-align: center;
+  padding: 3px 10px;
+  margin: 15px auto 10px auto;
+}
+.text_break{
+  overflow : hidden;
+  text-overflow : ellipsis;
+  white-space : nowrap;
+}
+
 @media (min-width: 576px) {
   .main_banner {
     height: 300px;
@@ -345,6 +320,7 @@ export default {
   name: 'swiper-example-autoplay',
   data() {
     return {
+      products: [],
       swiperOption: {
         slidesPerView: 4,
         spaceBetween: 30,
@@ -384,14 +360,17 @@ export default {
       },
     };
   },
-  // computed: {
-  //   swiper() {
-  //     return this.$refs.mySwiper.$swiper;
-  //   },
-  // },
-  // mounted() {
-  //   console.log('Current Swiper instance object', this.swiper);
-  //   this.swiper.slideTo(3, 1000, false);
-  // },
+  methods: {
+    getData() {
+      this.axios.get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
+        .then((res) => {
+          this.products = res.data.data;
+          console.log(this.products);
+        });
+    },
+  },
+  created() {
+    this.getData();
+  },
 };
 </script>

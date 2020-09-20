@@ -2,12 +2,12 @@
   <div class="main">
     <div class="container">
       <div class="row">
-        <div class="col-7">
+        <div class="col-6">
           <img :src="products.imageUrl" width="100%" alt />
         </div>
-        <div class="col-5">
-          <h3>{{ products.title }}</h3>
-          <p>{{ products.description }}</p>
+        <div class="col-6">
+          <h3 class="mb-4">{{ products.title }}</h3>
+          <p class="mb-4">{{ products.description }}</p>
           <div class="mb-3 d-flex justify-content-end">
             <div
               v-for="(item, index) in size"
@@ -54,7 +54,7 @@
 </template>
 <style scoped>
 .main {
-  margin-top: 77px;
+  margin-top: 110px;
 }
 .container {
   font-family: 'Noto Sans TC', sans-serif !important;

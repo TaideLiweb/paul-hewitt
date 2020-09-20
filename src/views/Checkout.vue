@@ -1,11 +1,12 @@
 <!--小心prettier-->
 <template>
   <div>
+    <Loading :active.sync="isLoading" />
     <div class="container main">
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <div class="d-flex justify-content-center align-items-center">
-            <h2>購買資訊</h2>
+            <h2 class="mb-0">購買資訊</h2>
           </div>
           <validation-observer v-slot="{ invalid }">
             <form @submit.prevent="confirmPayment">
@@ -90,31 +91,46 @@
             </form>
           </validation-observer>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <div class="d-flex justify-content-center align-items-center">
             <h2 class="mb-4">購物車內容</h2>
           </div>
           <div>
-            <table class="table">
-              <thead class="thead-light">
-                <th>產品名稱</th>
-                <th>數量</th>
-                <th>單價</th>
-                <th>小計</th>
-                <th></th>
-              </thead>
-              <tbody>
-                <tr v-for="item in products" :key="item.id">
-                  <td>{{ item.product.title }}</td>
-                  <td>{{ item.quantity }}</td>
-                  <td>{{ item.product.price }}</td>
-                  <td>{{ item.product.price * item.quantity }}</td>
-                  <td class="deleteBtn">
-                    <button class="btn btn-outline-danger" @click="deleteItem(item)">刪除</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="product_view">
+              <div class="d-flex border mb-2" v-for="item in products" :key="item.id">
+                <div class="col-md-6 col-lg-5 col-xl-4 px-0">
+                  <img
+                    :src="item.product.imageUrl"
+                    width="100%"
+                    alt
+                  />
+                </div>
+                <div class="col-md-4 col-lg-5 col-xl-6 pt-3 py-md-1 py-lg-3 pl-lg-4 pr-0 overflow-hidden">
+                  <div>
+                    <h5 class="mb-lg-2 text_overflow">{{ item.product.title }}</h5>
+                    <div>
+                      <div class="mb-1">價格：{{ item.product.price }}</div>
+                      <div class="mb-1">數量：{{ item.quantity }}</div>
+                      <div class="mb-1">小計：{{ item.product.price * item.quantity }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 d-flex align-items-center justify-content-center">
+                  <button class="btn btn-outline-danger" @click="deleteItem(item)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex mt-4 align-items-center">
+            <div class="col-6 px-0 d-flex ">
+              <input class="px-2 coupon_input" v-model="couponCode" type="text" placeholder="請輸入優惠卷">
+              <button class="btn-dark coupon_btn" @click="getCoupon">套用</button>
+            </div>
+            <h5 class="mb-0 px-0 col-6 d-flex justify-content-end">
+              總計 {{couponInfo.percent ? amount * (couponInfo.percent * 0.01) : amount | money}}
+            </h5>
           </div>
         </div>
       </div>
@@ -122,14 +138,51 @@
   </div>
 </template>
 <style scoped>
+input{
+  outline: none;
+}
 .main {
-  margin-top: 90px;
+  margin-top: 100px;
 }
 .deleteBtn {
   width: 90px;
 }
 select {
   appearance: none;
+}
+.text_overflow{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.product_view{
+    overflow-y: auto;
+    height: 350px;
+}
+.product_view::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    background: rgba(104, 104, 104, 0.1);
+}
+.product_view::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #c2c2c2;
+}
+.product_view::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.coupon_input{
+  width: 70%;
+}
+.coupon_btn{
+  outline: none;
+  border: none;
+  font-size: 14px;
+  width: 30%;
 }
 </style>
 <script>
@@ -142,15 +195,28 @@ export default {
       address: '',
       payment: '',
       message: '',
+      amount: '',
+      couponCode: '',
+      couponInfo: '',
       products: [],
+      isLoading: false,
     };
   },
   methods: {
     getData() {
+      this.isLoading = true;
+      let total = 0;
       this.axios
         .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/shopping`)
         .then((res) => {
           this.products = res.data.data;
+          this.products.forEach((value) => {
+            total += value.product.price;
+            this.amount = total;
+          });
+          console.log(res);
+          console.log(this.amount);
+          this.isLoading = false;
         });
     },
     deleteItem(item) {
@@ -162,10 +228,7 @@ export default {
         }
       });
       this.axios
-        .delete(
-          // eslint-disable-next-line comma-dangle
-          `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/shopping/${productIdArray[key].product.id}`
-        )
+        .delete(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/shopping/${productIdArray[key].product.id}`)
         .then(() => {
           this.getData();
         });
@@ -177,12 +240,34 @@ export default {
         tel: this.tel,
         address: this.address,
         payment: this.payment,
+        coupon: this.couponCode,
         message: this.message,
       };
-      this.axios.post(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/orders`, orderInformation)
+      this.axios
+        .post(
+          `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/orders`, orderInformation,
+        )
         .then((res) => {
+          this.name = '';
+          this.email = '';
+          this.tel = '';
+          this.address = '';
+          this.payment = '';
+          this.message = '';
+          this.amount = '';
+          this.couponInfo = '';
+          this.couponCode = '';
+          this.coupon = '';
           this.getData();
           console.log(res);
+        });
+    },
+    getCoupon() {
+      this.isLoading = true;
+      this.axios.post(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/coupon/search`, { code: this.couponCode })
+        .then((res) => {
+          this.couponInfo = res.data.data;
+          this.isLoading = false;
         });
     },
   },
