@@ -7,14 +7,17 @@ import VueAxios from 'vue-axios';
 import {
   ValidationObserver, ValidationProvider, extend, localize, configure,
 } from 'vee-validate';
+import VueSweetalert2 from 'vue-sweetalert2';
 import * as rules from 'vee-validate/dist/rules';
 import TW from 'vee-validate/dist/locale/zh_TW.json';
 import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import App from './App.vue';
 import router from './router';
 
+Vue.use(VueSweetalert2);
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
 Vue.component('Loading', Loading);

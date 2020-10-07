@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <Loading :active.sync="isLoading" />
     <div class="container">
       <div class="row">
         <div class="col-6">
@@ -21,9 +22,9 @@
           </div>
           <div class="d-flex justify-content-end align-items-end">
             <h4 class="text-right mr-3 origin_price">
-              <del>{{ products.origin_price | money }}</del>
+              <del>{{ products.origin_price || 0 | money }}</del>
             </h4>
-            <h2 class="text-right price">{{ products.price | money }}</h2>
+            <h2 class="text-right price">{{ products.price || 0 | money }}</h2>
           </div>
           <div class="d-flex justify-content-end align-items-end">
             <h6 class="text-right subtotal">{{ subTotal || 0 | subcount }}</h6>
@@ -113,10 +114,11 @@ export default {
     return {
       products: {},
       count: 0,
-      subTotal: '',
+      subTotal: 0,
       quantityCheck: true,
       size: [{ size: 's' }, { size: 'm' }, { size: 'l' }, { size: 'xl' }],
       checkSizeIndex: 0,
+      isLoading: false,
     };
   },
   methods: {
@@ -137,6 +139,7 @@ export default {
       this.checkSizeIndex = index;
     },
     checkOutUpdate() {
+      this.isLoading = true;
       if (this.count > 0) {
         this.axios
           .post(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/shopping`, {
@@ -144,10 +147,14 @@ export default {
             quantity: this.count,
           })
           .then((res) => {
+            this.isLoading = false;
+            this.$swal('成功', '成功放入購物車', 'success');
             console.log(res);
           })
           .catch(() => {
+            this.isLoading = false;
             console.log('此商品已放入購物車');
+            this.$swal('錯誤', '此商品已放入購物車', 'error');
           });
       } else {
         this.quantityCheck = false;
@@ -155,6 +162,7 @@ export default {
     },
   },
   created() {
+    this.isLoading = true;
     const { id } = this.$route.params;
     this.axios
       .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/product/${id}`)
@@ -162,6 +170,7 @@ export default {
         console.log('data', res);
         this.products = res.data.data;
         console.log('products', this.products);
+        this.isLoading = false;
       });
   },
 };

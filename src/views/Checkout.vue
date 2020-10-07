@@ -234,6 +234,7 @@ export default {
         });
     },
     confirmPayment() {
+      this.isLoading = true;
       const orderInformation = {
         name: this.name,
         email: this.email,
@@ -259,6 +260,8 @@ export default {
           this.couponCode = '';
           this.coupon = '';
           this.getData();
+          this.isLoading = false;
+          this.$swal('成功', '成功訂購', 'success');
           console.log(res);
         });
     },

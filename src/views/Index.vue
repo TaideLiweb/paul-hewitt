@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class="main_banner main">
-      <img src="../assets/images/Paul-Hewitt-Blog-Banner.jpg" width="100%" alt />
+    <div class="main_banner main position-relative">
+      <div class="coupon_text">即日起輸入 paul-hewwit <br>
+享受最高 20% 折扣</div>
     </div>
     <div class="container section1">
       <div class="row">
@@ -65,10 +66,12 @@
                 <img :src="item.imageUrl" width="100%" alt />
               </div>
               <div class="category_style">{{item.category}}</div>
-              <div class="text-center my-2 text_break">{{item.title}}</div>
+              <div class="text-center my-2 px-4 text_break">{{item.title}}</div>
               <div class="text-center my-2">{{item.price | money}}</div>
               <div class="d-flex justify-content-center">
-                <button class="btn btn-outline-dark">馬上去逛逛</button>
+                <router-link class="btn btn-outline-dark" :to="`/product/${item.id}`">
+                  商品詳情
+                </router-link>
               </div>
             </div>
           </swiper-slide>
@@ -86,8 +89,8 @@
         </div>
         <div class="col-12 col-sm-6 px-4 d-flex align-items-center">
           <div>
-            <h2 class="text-center">Paul hewwit代表你滿滿的心意</h2>
-            <p class="text-center">
+            <h2 class="text-center mb-3">Paul hewwit代表你滿滿的心意</h2>
+            <p class="text-center mb-4">
               還在煩惱要送什麼東西給另一半嗎?情人節活動火熱開跑中 ,活動期間買一送一
             </p>
             <div class="d-flex justify-content-center">
@@ -97,12 +100,6 @@
         </div>
       </div>
     </div>
-    <footer
-      class="mt-4 d-flex justify-content-center align-items-center"
-      style="height:100px; background:#4b4b4b; color:#fff"
-    >
-      資料、圖片來源皆來自網路，僅用來做為學習用途。
-    </footer>
   </div>
 </template>
 <style scoped>
@@ -117,12 +114,27 @@ a{
   color: #fff;
   text-decoration: none;
 }
+.coupon_text{
+  text-align: center;
+  position: absolute;
+  width: 52%;
+  top: 53%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px 0px;
+  font-size: 14px;
+}
 .main {
   margin-top: 77px;
 }
 .main_banner {
   height: 167px;
   overflow: hidden;
+  background-image: url(../assets/images/Paul-Hewitt-Blog-Banner.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 .section1,
 .section3,
@@ -221,7 +233,7 @@ a{
   color: #fff;
 }
 .swiper-container {
-  height: 450px;
+  height: 480px;
   width: 100%;
 }
 
@@ -230,9 +242,8 @@ a{
   justify-content: center;
 }
 .swiper_image {
-  display: flex;
-  justify-content: center;
   width: 270px;
+  margin: 0 auto;
 }
 .swiper_image > img {
   height: 270px;
@@ -269,6 +280,11 @@ a{
   .swiper_image > img {
     height: auto;
   }
+    .coupon_text{
+    width: 36%;
+    top: 70%;
+    font-size: 18px;
+  }
 }
 @media (min-width: 768px) {
   .main_banner {
@@ -289,6 +305,11 @@ a{
   .black_block_content {
     padding: 60px;
   }
+  .coupon_text{
+    width: 32%;
+    top: 70%;
+    font-size: 18px;
+  }
 }
 @media (min-width: 992px) {
   .main_banner {
@@ -306,6 +327,11 @@ a{
   .fixed_gb > div {
     width: 60%;
   }
+  .coupon_text{
+  width: 25%;
+  top: 70%;
+  font-size: 18px;
+}
 }
 @media (min-width: 1200px) {
   /* .swiper_image {
@@ -313,6 +339,9 @@ a{
     justify-content: center;
     width: 270px;
   } */
+  .coupon_text{
+    width: 21%;
+  }
 }
 </style>
 <script>
@@ -327,10 +356,10 @@ export default {
         slidesPerGroup: 1,
         loop: true,
         loopFillGroupWithBlank: true,
-        autoplay: {
-          delay: 2500,
-          disableOnInteraction: false,
-        },
+        // autoplay: {
+        //   delay: 2500,
+        //   disableOnInteraction: false,
+        // },
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
