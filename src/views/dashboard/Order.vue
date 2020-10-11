@@ -132,21 +132,17 @@ export default {
     };
   },
   methods: {
-    getData(num = 1) {
+    getData(num) {
+      let pageNum = num;
       if (num > this.pagination.total_pages) {
-        // eslint-disable-next-line no-param-reassign
-        num = this.pagination.current_page;
+        pageNum = this.pagination.current_page;
       }
-      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/orders?page=${num}`;
+      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${pageNum}`;
       this.axios
         .get(api)
         .then((res) => {
           this.order = res.data.data.map((item) => item);
           this.pagination = res.data.meta.pagination;
-          console.log(this.order);
-        })
-        .catch((err) => {
-          console.log('err', err);
         });
     },
     openEditModal(template) {
@@ -165,7 +161,6 @@ export default {
         this.orderOther.message = this.orderOther.message ? this.orderOther.message : '無備註';
         this.orderProduvts = this.orderOther.products;
         this.orderUser = this.orderOther.user;
-        console.log(this.orderOther);
       });
       $('#couponModal').modal('show');
     },
@@ -176,7 +171,6 @@ export default {
       $('#couponModal').modal('show');
     },
     updateData() {
-      console.log(this.template);
       let key;
       this.order.forEach((item, index) => {
         if (this.template.id === item.id) {
@@ -185,10 +179,8 @@ export default {
       });
       const api = ` ${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/orders/${this.order[key].id}`;
       this.template = { ...this.orderOther, ...this.orderUser };
-      console.log(this.template);
-      this.axios.patch(api, this.template).then((res) => {
+      this.axios.patch(api, this.template).then(() => {
         this.getData();
-        console.log(res);
       });
       $('#couponModal').modal('hide');
     },

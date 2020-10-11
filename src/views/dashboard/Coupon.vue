@@ -142,21 +142,17 @@ export default {
     };
   },
   methods: {
-    getData(num = 1) {
+    getData(num) {
+      let pageNum = num;
       if (num > this.pagination.total_pages) {
-        // eslint-disable-next-line no-param-reassign
-        num = this.pagination.current_page;
+        pageNum = this.pagination.current_page;
       }
-      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupons?page=${num}`;
+      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${pageNum}`;
       this.axios
         .get(api)
         .then((res) => {
           this.coupon = res.data.data;
           this.pagination = res.data.meta.pagination;
-          console.log(this.coupon);
-        })
-        .catch((err) => {
-          console.log('err', err);
         });
     },
     openEditModal(item) {
@@ -183,9 +179,8 @@ export default {
         }
       });
       const api = ` ${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.coupon[key].id}`;
-      this.axios.delete(api).then((res) => {
+      this.axios.delete(api).then(() => {
         this.getData();
-        console.log(res);
       });
       $('#deleteModal').modal('hide');
     },
@@ -205,10 +200,8 @@ export default {
         });
         this.template.deadline_at = `${this.deadline_at_date} ${this.deadline_at_time}`;
         const api = ` ${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.coupon[key].id}`;
-        console.log(api);
-        this.axios.patch(api, this.template).then((res) => {
+        this.axios.patch(api, this.template).then(() => {
           this.getData();
-          console.log(res);
         });
       } else {
         this.template.enabled = false;
@@ -218,8 +211,7 @@ export default {
             `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupon`,
             this.template,
           )
-          .then((res) => {
-            console.log(res);
+          .then(() => {
             this.getData();
           });
       }
@@ -233,7 +225,6 @@ export default {
         enabled: !itemEnabled,
         deadline_at: item.deadline.datetime,
       };
-      console.log(this.template);
       const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupon/${itemId}`;
       this.axios.patch(api, { ...this.template });
     },

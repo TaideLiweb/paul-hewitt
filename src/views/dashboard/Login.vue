@@ -73,9 +73,6 @@ export default {
             expired * 1000,
           )} GMT; path=/`;
           this.$router.push('/admin/products');
-        })
-        .catch((err) => {
-          console.log('error', err);
         });
     },
   },

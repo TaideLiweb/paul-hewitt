@@ -83,21 +83,17 @@ export default {
     };
   },
   methods: {
-    getData(num = 1) {
+    getData(num) {
+      let pageNum = num;
       if (num > this.pagination.total_pages) {
-        // eslint-disable-next-line no-param-reassign
-        num = this.pagination.current_page;
+        pageNum = this.pagination.current_page;
       }
-      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${num}`;
+      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${pageNum}`;
       this.axios
         .get(api)
         .then((res) => {
           this.products = res.data.data;
           this.pagination = res.data.meta.pagination;
-          console.log(this.products);
-        })
-        .catch((err) => {
-          console.log('err', err);
         });
     },
     openModal() {
@@ -148,8 +144,7 @@ export default {
         this.template.enabled = false;
         this.template.id = time;
         const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product`;
-        this.axios.post(api, this.template).then((res) => {
-          console.log(res);
+        this.axios.post(api, this.template).then(() => {
           this.getData();
           this.isLoading = false;
         });
@@ -170,8 +165,7 @@ export default {
   },
   created() {
     this.token = document.cookie.replace(
-      // eslint-disable-next-line no-useless-escape
-      /(?:(?:^|.*;\s*)loginVerify\s*\=\s*([^;]*).*$)|^.*$/,
+      /(?:(?:^|.*;\s*)loginVerify\s*=\s*([^;]*).*$)|^.*$/,
       '$1',
     );
     this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`;

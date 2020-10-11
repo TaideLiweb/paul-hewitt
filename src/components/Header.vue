@@ -156,7 +156,6 @@ export default {
       this.favoriteProduct = this.products.filter(
         (product) => this.favorite.indexOf(product.id) > -1,
       );
-      console.log(this.favoriteProduct);
     },
   },
   created() {

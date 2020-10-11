@@ -146,14 +146,12 @@ export default {
             product: this.products.id,
             quantity: this.count,
           })
-          .then((res) => {
+          .then(() => {
             this.isLoading = false;
             this.$swal('成功', '成功放入購物車', 'success');
-            console.log(res);
           })
           .catch(() => {
             this.isLoading = false;
-            console.log('此商品已放入購物車');
             this.$swal('錯誤', '此商品已放入購物車', 'error');
           });
       } else {
@@ -167,9 +165,7 @@ export default {
     this.axios
       .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/product/${id}`)
       .then((res) => {
-        console.log('data', res);
         this.products = res.data.data;
-        console.log('products', this.products);
         this.isLoading = false;
       });
   },

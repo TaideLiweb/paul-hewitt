@@ -394,7 +394,6 @@ export default {
       this.axios.get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
         .then((res) => {
           this.products = res.data.data;
-          console.log(this.products);
         });
     },
   },

@@ -214,8 +214,6 @@ export default {
             total += value.product.price;
             this.amount = total;
           });
-          console.log(res);
-          console.log(this.amount);
           this.isLoading = false;
         });
     },
@@ -248,7 +246,7 @@ export default {
         .post(
           `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/orders`, orderInformation,
         )
-        .then((res) => {
+        .then(() => {
           this.name = '';
           this.email = '';
           this.tel = '';
@@ -262,7 +260,6 @@ export default {
           this.getData();
           this.isLoading = false;
           this.$swal('成功', '成功訂購', 'success');
-          console.log(res);
         });
     },
     getCoupon() {
