@@ -137,7 +137,7 @@ export default {
       if (num > this.pagination.total_pages) {
         pageNum = this.pagination.current_page;
       }
-      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${pageNum}`;
+      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/orders?page=${pageNum}`;
       this.axios
         .get(api)
         .then((res) => {

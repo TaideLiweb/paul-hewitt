@@ -147,11 +147,12 @@ export default {
       if (num > this.pagination.total_pages) {
         pageNum = this.pagination.current_page;
       }
-      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${pageNum}`;
+      const api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupons?page=${pageNum}`;
       this.axios
         .get(api)
         .then((res) => {
           this.coupon = res.data.data;
+          console.log(this.coupon);
           this.pagination = res.data.meta.pagination;
         });
     },
