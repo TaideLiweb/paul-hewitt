@@ -2,7 +2,7 @@
   <div class="main">
     <Loading :active.sync="isLoading" />
     <div class="container">
-      <div class="row">
+      <div class="row py-5">
         <div class="col-6">
           <img :src="products.imageUrl" width="100%" alt />
         </div>
@@ -54,9 +54,7 @@
   </div>
 </template>
 <style scoped>
-.main {
-  margin-top: 110px;
-}
+
 .container {
   font-family: 'Noto Sans TC', sans-serif !important;
 }
@@ -155,6 +153,8 @@ export default {
             this.$swal('錯誤', '此商品已放入購物車', 'error');
           });
       } else {
+        this.isLoading = false;
+        this.$swal('錯誤', '請選擇商品', 'error');
         this.quantityCheck = false;
       }
     },

@@ -61,9 +61,7 @@
 body {
   font-family: 'Noto Sans TC', sans-serif !important;
 }
-.main {
-  margin-top: 77px;
-}
+
 a:hover {
   text-decoration: none;
 }

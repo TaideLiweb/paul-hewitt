@@ -1,9 +1,8 @@
 <!--小心prettier-->
 <template>
-  <div>
+  <div class="container main">
     <Loading :active.sync="isLoading" />
-    <div class="container main">
-      <div class="row">
+      <div class="row py-5">
         <div class="col-12 col-md-6">
           <div class="d-flex justify-content-center align-items-center">
             <h2 class="mb-0">購買資訊</h2>
@@ -134,15 +133,11 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 <style scoped>
 input{
   outline: none;
-}
-.main {
-  margin-top: 100px;
 }
 .deleteBtn {
   width: 90px;
@@ -160,6 +155,10 @@ select {
 .product_view{
     overflow-y: auto;
     height: 350px;
+}
+.product_view img{
+  height: 150px;
+  object-fit: cover;
 }
 .product_view::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);

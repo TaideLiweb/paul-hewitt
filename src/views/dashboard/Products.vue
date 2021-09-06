@@ -56,11 +56,7 @@
     <deletemodal @cancel="cancel" @remove-data="removeData" :template="template"></deletemodal>
   </div>
 </template>
-<style scoped>
-.main {
-  margin-top: 77px;
-}
-</style>
+
 <script>
 /* global $ */
 import modal from '../../components/Modal.vue';

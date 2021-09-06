@@ -112,11 +112,7 @@
     </div>
   </div>
 </template>
-<style scoped>
-.main {
-  margin-top: 77px;
-}
-</style>
+
 <script>
 /* global $ */
 export default {

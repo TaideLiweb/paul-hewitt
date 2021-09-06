@@ -125,9 +125,7 @@ a{
   padding: 10px 0px;
   font-size: 14px;
 }
-.main {
-  margin-top: 77px;
-}
+
 .main_banner {
   height: 167px;
   overflow: hidden;
@@ -246,6 +244,7 @@ a{
   margin: 0 auto;
 }
 .swiper_image > img {
+  object-fit: cover;
   height: 270px;
 }
 
@@ -274,11 +273,15 @@ a{
   .black_block_btn {
     padding: 10px 25px;
   }
+  .swiper-container {
+  height: 440px;
+  width: 100%;
+  }
   .swiper_image {
     width: 100%;
   }
   .swiper_image > img {
-    height: auto;
+    height: 200px;
   }
     .coupon_text{
     width: 36%;
