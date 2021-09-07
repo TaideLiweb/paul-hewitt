@@ -267,6 +267,10 @@ export default {
         .then((res) => {
           this.couponInfo = res.data.data;
           this.isLoading = false;
+          this.$swal('成功', '序號正確', 'success');
+        }).catch(() => {
+          this.isLoading = false;
+          this.$swal('失敗', '序號錯誤', 'error');
         });
     },
   },

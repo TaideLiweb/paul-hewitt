@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main_banner main position-relative">
-      <div class="coupon_text">即日起輸入 paul-hewwit <br>
+      <div class="coupon_text">即日起輸入 paul-hewitt <br>
 享受最高 20% 折扣</div>
     </div>
     <div class="container section1">
