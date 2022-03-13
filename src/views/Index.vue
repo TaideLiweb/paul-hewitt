@@ -4,11 +4,9 @@
       <div class="coupon_text">即日起輸入 paul-hewitt <br>
 享受最高 20% 折扣</div>
     </div>
-    <div class="container section1">
+    <div class="container section">
       <div class="row">
-        <div class="col-12 my-4 section_title">
-          <h3 class="d-flex justify-content-center">商品分類</h3>
-        </div>
+        <h3 class="col-12 section_title">商品分類</h3>
         <div class="col-12 d-flex">
           <div id="category_watch" class="product_category mx-2 mx-md-0">
             <div class="black_block">
@@ -41,24 +39,18 @@
         </div>
       </div>
     </div>
-    <div class="section2">
-      <div>
-        <div class="section_title my-4">
-          <h3 class="d-flex justify-content-center">關於我們</h3>
-        </div>
-        <div class="fixed_gb">
-          <div>
-            承襲傳統航海冒險精神為品牌核心船錨識別，結合生動的色彩與海洋狂熱風情，Paul
-            Hewit每個系列都如同船錨品牌靈魂源起一樣充滿故事性。
-          </div>
+    <div class="section">
+      <h3 class="col-12 section_title">關於我們</h3>
+      <div class="fixed_gb">
+        <div>
+          承襲傳統航海冒險精神為品牌核心船錨識別，結合生動的色彩與海洋狂熱風情，Paul
+          Hewit每個系列都如同船錨品牌靈魂源起一樣充滿故事性。
         </div>
       </div>
     </div>
-    <div class="container section3">
+    <div class="container section">
       <div class="row">
-        <div class="col-12 my-4 section_title">
-          <h3 class="d-flex justify-content-center">新品上市</h3>
-        </div>
+        <h3 class="col-12 section_title">新品上市</h3>
         <swiper class="swiper" :options="swiperOption">
           <swiper-slide v-for="item in products" :key="item.id">
             <div class="overflow-hidden">
@@ -79,11 +71,9 @@
         </swiper>
       </div>
     </div>
-    <div class="container section4">
+    <div class="container section">
       <div class="row">
-        <div class="col-12 my-4 section_title">
-          <h3 class="d-flex justify-content-center">七夕商品</h3>
-        </div>
+        <h3 class="col-12 section_title">七夕商品</h3>
         <div class="col-12 col-sm-6 py-4 py-sm-0 px-0">
           <img src="../assets/images/FhAI6b9FqC5t7meWCzZFbWYkC1JD.jpg" width="100%" alt />
         </div>
@@ -134,25 +124,24 @@ a{
   background-size: cover;
   background-position: center;
 }
-.section1,
-.section3,
-.section4 {
-  margin-top: 50px;
-}
-.section2 {
+.section{
   margin-top: 70px;
 }
+
 .section_title {
-  display: flex;
-  justify-content: center;
+  text-align: center;
+  padding-bottom:1.5rem;
+  margin: 0;
   position: relative;
 }
-.section_title > h3::before {
+.section_title::before {
   content: '';
-  top: -15px;
-  position: absolute;
   width: 40px;
   height: 2px;
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  transform: translate(-50%,0%);
   background: rgb(180, 180, 180);
 }
 .product_category {
@@ -397,6 +386,12 @@ export default {
       this.axios.get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
         .then((res) => {
           this.products = res.data.data;
+          // this.products = res.data.data.map((item, index) => {
+          //   if (index < 5) {
+          //     return item;
+          //   }
+          // });
+          // console.log(this.products);
         });
     },
   },
