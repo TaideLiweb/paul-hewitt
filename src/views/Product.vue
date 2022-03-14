@@ -2,13 +2,13 @@
   <div class="main">
     <Loading :active.sync="isLoading" />
     <div class="container">
-      <div class="row py-5">
-        <div class="col-6">
+      <div class="row">
+        <div class="col-md-6 col-12">
           <img :src="products.imageUrl" width="100%" alt />
         </div>
-        <div class="col-6">
-          <h3 class="mb-4">{{ products.title }}</h3>
-          <p class="mb-4">{{ products.description }}</p>
+        <div class="col-md-6 col-12">
+          <h3 class="mt-4">{{ products.title }}</h3>
+          <p class="my-4">{{ products.description }}</p>
           <div class="mb-3 d-flex justify-content-end">
             <div
               v-for="(item, index) in size"

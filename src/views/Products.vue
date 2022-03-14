@@ -8,15 +8,15 @@
       <div class="container section1">
         <div class="row mt-4">
           <div class="col-12 col-md-3 col-lg-2 product_category">
-            <h4>商品分類</h4>
+            <h2>商品分類</h2>
             <ul class="px-0">
               <li class="py-2" v-for="item in category" :key="item" @click="category_switch(item)">
                 <a>{{ item }}</a>
               </li>
             </ul>
           </div>
-          <div class="col-12 col-md-9 col-gl-10">
-            <h3>全部商品</h3>
+          <div class="col-12 col-md-9 col-gl-10 product_list">
+            <h2>全部商品</h2>
             <div class="row mt-3">
               <div class="col-sm-6 col-lg-4 mb-3" v-for="item in products" :key="item.id">
                 <div class="card">
@@ -25,7 +25,7 @@
                   </div>
                   <div>
                     <div class="py-2 px-3 border_t overflow-hidden">
-                      <h5 class="text_break">{{ item.title }}</h5>
+                      <h3 class="text_break">{{ item.title }}</h3>
                       <div class="my-2 d-flex align-items-center justify-content-between">
                         <div class="origin_price">
                           <del>{{ item.origin_price | money }}</del>
@@ -64,6 +64,9 @@ body {
 a:hover {
   text-decoration: none;
 }
+.product_category h2,.product_list h2{
+  font-size: 1.75rem;
+}
 .product_category li {
   list-style: none;
 }
@@ -88,18 +91,24 @@ a:hover {
   transition: all 0.3s;
 }
 .buy:hover {
-  color: #343a40;
-  background: #e6dfd7;
+  color: #fff;
+  background: #756f69;
 }
 .favor {
   flex: 1;
 }
-.favor:hover {
-  color: #dc3545;
+.favor i{
+  transition: all .3s;
+}
+.favor:hover i{
+  transform: scale(1.2);
 }
 .origin_price {
   color: #6c757d;
   font-size: 16px;
+}
+.card h3{
+  font-size: 1.25rem;
 }
 .price {
   color: #dc3545;

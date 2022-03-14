@@ -34,12 +34,12 @@
                 />
                 <span class="invalid-feedback">{{ errors[0] }}</span>
               </validation-provider>
-              <validation-provider rules="required|min:8" v-slot="{ errors, classes }">
+              <validation-provider rules="required|min:8|numeric" v-slot="{ errors, classes }">
                 <label for="tel">電話</label>
                 <input
                   id="tel"
                   :class="classes"
-                  type="text"
+                  type="tel"
                   name="電話"
                   v-model="tel"
                   class="form-control"
@@ -51,7 +51,7 @@
                 <input
                   id="address"
                   :class="classes"
-                  type="text"
+                  type="address"
                   name="地址"
                   v-model="address"
                   class="form-control"
@@ -94,31 +94,29 @@
           <div class="d-flex justify-content-center align-items-center">
             <h2 class="mb-4">購物車內容</h2>
           </div>
-          <div>
-            <div class="product_view">
-              <div class="d-flex border mb-2" v-for="item in products" :key="item.id">
-                <div class="col-md-6 col-lg-5 col-xl-4 px-0">
-                  <img
-                    :src="item.product.imageUrl"
-                    width="100%"
-                    alt
-                  />
-                </div>
-                <div class="col-md-4 col-lg-5 col-xl-6 pt-3 py-md-1 py-lg-3 pl-lg-4 pr-0 overflow-hidden">
+          <div class="product_view">
+            <div class="d-flex border mb-2" v-for="item in products" :key="item.id">
+              <div class="col-md-6 col-lg-5 col-xl-4 px-0">
+                <img
+                  :src="item.product.imageUrl"
+                  width="100%"
+                  alt
+                />
+              </div>
+              <div class="col-md-4 col-lg-5 col-xl-6 pt-3 py-md-1 py-lg-3 pl-lg-4 pr-0 overflow-hidden">
+                <div>
+                  <h5 class="mb-lg-2 text_overflow">{{ item.product.title }}</h5>
                   <div>
-                    <h5 class="mb-lg-2 text_overflow">{{ item.product.title }}</h5>
-                    <div>
-                      <div class="mb-1">價格：{{ item.product.price }}</div>
-                      <div class="mb-1">數量：{{ item.quantity }}</div>
-                      <div class="mb-1">小計：{{ item.product.price * item.quantity }}</div>
-                    </div>
+                    <div class="mb-1">價格：{{ item.product.price }}</div>
+                    <div class="mb-1">數量：{{ item.quantity }}</div>
+                    <div class="mb-1">小計：{{ item.product.price * item.quantity }}</div>
                   </div>
                 </div>
-                <div class="col-2 d-flex align-items-center justify-content-center">
-                  <button class="btn btn-outline-danger" @click="deleteItem(item)">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
+              </div>
+              <div class="col-2 d-flex align-items-center justify-content-center">
+                <button class="btn btn-outline-danger" @click="deleteItem(item)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -154,7 +152,7 @@ select {
 }
 .product_view{
     overflow-y: auto;
-    height: 350px;
+    max-height: 350px;
 }
 .product_view img{
   height: 150px;

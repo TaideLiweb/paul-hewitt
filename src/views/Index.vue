@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="main_banner main position-relative">
-      <div class="coupon_text">即日起輸入 paul-hewitt <br>
+      <div class="coupon_text oh">即日起輸入 paul-hewitt <br>
 享受最高 20% 折扣</div>
     </div>
     <div class="container section">
       <div class="row">
-        <h3 class="col-12 section_title">商品分類</h3>
+        <h2 class="col-12 section_title">商品分類</h2>
         <div class="col-12 d-flex">
           <div id="category_watch" class="product_category mx-2 mx-md-0">
             <div class="black_block">
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="section">
-      <h3 class="col-12 section_title">關於我們</h3>
+      <h2 class="col-12 section_title">關於我們</h2>
       <div class="fixed_gb">
         <div>
           承襲傳統航海冒險精神為品牌核心船錨識別，結合生動的色彩與海洋狂熱風情，Paul
@@ -50,7 +50,7 @@
     </div>
     <div class="container section">
       <div class="row">
-        <h3 class="col-12 section_title">新品上市</h3>
+        <h2 class="col-12 section_title">新品上市</h2>
         <swiper class="swiper" :options="swiperOption">
           <swiper-slide v-for="item in products" :key="item.id">
             <div class="overflow-hidden">
@@ -58,8 +58,8 @@
                 <img :src="item.imageUrl" width="100%" alt />
               </div>
               <div class="category_style">{{item.category}}</div>
-              <div class="text-center my-2 px-4 text_break">{{item.title}}</div>
-              <div class="text-center my-2">{{item.price | money}}</div>
+              <h3 class="text-center my-2 px-4 text_break">{{item.title}}</h3>
+              <p class="text-center my-2">{{item.price | money}}</p>
               <div class="d-flex justify-content-center">
                 <router-link class="btn btn-outline-dark" :to="`/product/${item.id}`">
                   商品詳情
@@ -73,13 +73,13 @@
     </div>
     <div class="container section">
       <div class="row">
-        <h3 class="col-12 section_title">七夕商品</h3>
+        <h2 class="col-12 section_title">七夕商品</h2>
         <div class="col-12 col-sm-6 py-4 py-sm-0 px-0">
           <img src="../assets/images/FhAI6b9FqC5t7meWCzZFbWYkC1JD.jpg" width="100%" alt />
         </div>
         <div class="col-12 col-sm-6 px-4 d-flex align-items-center">
           <div>
-            <h2 class="text-center mb-3">Paul hewwit代表你滿滿的心意</h2>
+            <h3 class="text-center mb-3">Paul hewwit代表你滿滿的心意</h3>
             <p class="text-center mb-4">
               還在煩惱要送什麼東西給另一半嗎?情人節活動火熱開跑中 ,活動期間買一送一
             </p>
@@ -129,9 +129,10 @@ a{
 }
 
 .section_title {
-  text-align: center;
   padding-bottom:1.5rem;
   margin: 0;
+  font-size: 1.8rem;
+  text-align: center;
   position: relative;
 }
 .section_title::before {
@@ -227,6 +228,9 @@ a{
 .swiper-slide {
   display: flex;
   justify-content: center;
+}
+.swiper-slide h3{
+  font-size: 1rem;
 }
 .swiper_image {
   width: 270px;
@@ -385,13 +389,14 @@ export default {
     getData() {
       this.axios.get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/products`)
         .then((res) => {
-          this.products = res.data.data;
-          // this.products = res.data.data.map((item, index) => {
-          //   if (index < 5) {
-          //     return item;
-          //   }
-          // });
-          // console.log(this.products);
+          // this.products = res.data.data;
+          const newItem = [];
+          res.data.data.forEach((item, index) => {
+            if (index < 5) {
+              newItem.push(item);
+            }
+          });
+          this.products = newItem;
         });
     },
   },
