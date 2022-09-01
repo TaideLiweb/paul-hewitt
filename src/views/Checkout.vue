@@ -58,7 +58,7 @@
                 />
                 <span class="invalid-feedback">{{ errors[0] }}</span>
               </validation-provider>
-              <validation-provider rules="required" v-slot="{ errors, classes }">
+              <!-- <validation-provider rules="required" v-slot="{ errors, classes }">
                 <label for="payment">付款方式</label>
                 <select
                   id="payment"
@@ -77,7 +77,25 @@
                   <option value="GooglePay">GooglePay</option>
                 </select>
                 <span class="invalid-feedback">{{ errors[0] }}</span>
-              </validation-provider>
+              </validation-provider> -->
+              <label for="payment">付款方式</label>
+              <select
+                id="payment"
+                :class="classes"
+                type="number"
+                name="付款方式"
+                v-model="payment"
+                class="form-control"
+                required
+              >
+                <option value="WebATM">WebATM</option>
+                <option value="ATM">ATM</option>
+                <option value="CVS">CVS</option>
+                <option value="Barcode">Barcode</option>
+                <option value="Credit">Credit</option>
+                <option value="ApplePay">ApplePay</option>
+                <option value="GooglePay">GooglePay</option>
+              </select>
               <label for="message">留言</label>
               <textarea
                 id="message"

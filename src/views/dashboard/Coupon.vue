@@ -150,7 +150,6 @@ export default {
         .get(api)
         .then((res) => {
           this.coupon = res.data.data;
-          console.log(this.coupon);
           this.pagination = res.data.meta.pagination;
         });
     },

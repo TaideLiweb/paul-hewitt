@@ -15,7 +15,7 @@
           <th>{{item.id}}</th>
           <th>{{item.payment}}</th>
           <th>{{item.amount}}</th>
-          <th>{{item.paid}}</th>
+          <th>{{item.paid === true ? "已付款":"未付款"}}</th>
           <th>
             <button
               type="button"
@@ -104,7 +104,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
             <button type="button" class="btn btn-primary" @click="updateData">確認</button>
           </div>
         </div>
